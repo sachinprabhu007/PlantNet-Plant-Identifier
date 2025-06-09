@@ -15,11 +15,10 @@ A beautiful Streamlit web application that identifies plants from photos using t
 
 ## 🚀 Live Demo
 
-Visit the live application: [Your Render URL will go here]
+Visit the live application: 
 
 ## 📸 Screenshots
 
-![App Screenshot]
 
 ## 🛠️ Installation & Setup
 
@@ -133,7 +132,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Please go through [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
@@ -143,7 +142,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📧 Contact
 
-Project Link: [https://github.com/sachinprabhu007/Plant_Detection](https://github.com/sachinprabhu007/PlantNet-Plant-Identifier)
+Project Link: https://github.com/sachinprabhu007/PlantNet-Plant-Identifier
 
 ---
 
