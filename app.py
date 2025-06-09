@@ -207,31 +207,20 @@ def main():
     st.markdown('<h1 class="main-header">🌱 PlantNet Plant Identifier</h1>', unsafe_allow_html=True)
     st.markdown("**Identify plants from photos using AI-powered PlantNet API**")
     
-    # Sidebar for configuration
     with st.sidebar:
-        st.header("⚙️ Configuration")
-        
-        # API Key input with better validation
-        api_key = st.text_input(
-            "🔑 PlantNet API Key", 
-            type="password",
-            help="Get your free API key from https://my.plantnet.org/",
-            placeholder="Enter your API key here...",
-            key="api_key_input"
-        )
-        
-        # Test API key button
-        if api_key:
-            if st.button("🧪 Test API Key"):
-                with st.spinner("Testing API key..."):
-                    is_valid, message = test_api_key(api_key)
-                    if is_valid:
-                        st.success(f"✅ {message}")
-                    else:
-                        st.error(f"❌ {message}")
-        
-        st.markdown("---")
-        
+    st.header("⚙️ Configuration")
+
+    # Load API key from environment variable
+    api_key = os.getenv("PLANTNET_API_KEY", "").strip()
+    
+    if not api_key:
+        st.error("⚠️ API key not found in environment variables!")
+        st.markdown("Please set the `PLANTNET_API_KEY` environment variable in Render dashboard.")
+    
+    # No test API key input or debug info shown
+    
+    st.markdown("---")
+    
         # Project selection
         project_options = {
             "all": "🌍 All flora (worldwide)",
@@ -268,9 +257,6 @@ def main():
         
         # Debug section for troubleshooting
         with st.expander("🔧 Debug Info"):
-            if api_key:
-                st.code(f"API Key Length: {len(api_key)}")
-                st.code(f"API Key Preview: {api_key[:8]}...")
             st.code(f"Selected Project: {project}")
             st.code(f"Selected Organ: {organ_type}")
         
@@ -284,21 +270,6 @@ def main():
             - **Include multiple plant parts** 📋
             """)
         
-        # Troubleshooting section
-        with st.expander("🆘 Troubleshooting 401 Errors"):
-            st.markdown("""
-            **Common causes of 401 errors:**
-            
-            1. **Invalid API Key** - Make sure you copied it correctly
-            2. **Expired API Key** - Check if your key is still active
-            3. **Whitespace** - Remove any extra spaces
-            4. **Wrong API Version** - Ensure you're using v2 API key
-            
-            **Solutions:**
-            - Get a fresh API key from [my.plantnet.org](https://my.plantnet.org/)
-            - Test your key using the button above
-            - Copy-paste carefully without extra characters
-            """)
         
         # About section
         with st.expander("ℹ️ About PlantNet"):
@@ -344,41 +315,29 @@ def main():
         # Instructions and examples
         st.markdown("### 📖 How to Use")
         st.markdown("""
-        1. **Get API Key** 🔑  
-           Sign up at [my.plantnet.org](https://my.plantnet.org/)
         
-        2. **Enter Key** ✍️  
-           Paste it in the sidebar
-        
-        3. **Test Key** 🧪  
-           Click "Test API Key" button
-        
-        4. **Configure** ⚙️  
+        1. **Configure** ⚙️  
            Choose region and plant part
         
-        5. **Upload Photo** 📸  
+        2. **Upload Photo** 📸  
            Select a clear plant image
         
-        6. **Identify** 🔍  
+        3. **Identify** 🔍  
            Click the button below!
         """)
     
     # Identify button (full width)
     if uploaded_file is not None and 'image' in locals() and image is not None:
         if st.button("🔍 **Identify Plant**", type="primary", use_container_width=True):
-            if not api_key or not api_key.strip():
-                st.error("🔑 Please enter your PlantNet API key in the sidebar.")
-                st.info("👉 Get your free API key from: https://my.plantnet.org/")
+            if not api_key:
+                st.error("🔑 API key missing! Please set PLANTNET_API_KEY in Render environment variables.")
             else:
                 with st.spinner("🔍 Analyzing image... This may take a few seconds"):
-                    # Identify the plant
                     results = identify_plant(image, api_key, project, organ_type)
-                    
-                    # Display results
                     st.markdown("---")
                     st.markdown("## 📊 Identification Results")
-                    display_results(results)
-    
+                    display_results(results) 
+                    
     # Footer
     st.markdown("---")
     st.markdown("""
