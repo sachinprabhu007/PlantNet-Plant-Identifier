@@ -188,10 +188,9 @@ def main():
     st.markdown('<h1 class="main-header">🌱 PlantNet Plant Identifier</h1>', unsafe_allow_html=True)
     st.markdown("**Identify plants from photos using AI-powered PlantNet API**")
     
+    # Sidebar for configuration
     with st.sidebar:
-    
-    st.markdown("---")
-    
+        st.markdown("---")
         # Project selection
         project_options = {
             "all": "🌍 All flora (worldwide)",
