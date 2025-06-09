@@ -19,7 +19,9 @@ Visit the live application: [Your Render URL will go here]
 
 ## 📸 Screenshots
 
-![App Screenshot]
+![plantnet_1](https://github.com/user-attachments/assets/b4cefab2-abed-4da5-bc11-bb0572a8d05d)
+![plantnet_2](https://github.com/user-attachments/assets/882b5048-6aa0-4be0-93af-63c260550267)
+![plantnet_3](https://github.com/user-attachments/assets/d81caa93-aec3-47d9-9107-146acce9cb1e)
 
 ## 🛠️ Installation & Setup
 
