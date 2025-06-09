@@ -15,7 +15,7 @@ A beautiful Streamlit web application that identifies plants from photos using t
 
 ## 🚀 Live Demo
 
-Visit the live application: 
+Visit the live application: https://plantnet-plant-identifier-1.onrender.com/
 
 ## 📸 Screenshots
 
@@ -112,7 +112,7 @@ This app requires a free PlantNet API key:
 ## 🏗️ Architecture
 
 ```
-plantnet-identifier/
+plantnet-plant-identifier
 ├── app.py              # Main Streamlit application
 ├── requirements.txt    # Python dependencies
 ├── README.md          # This file
