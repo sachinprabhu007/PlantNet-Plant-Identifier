@@ -161,7 +161,7 @@ def main():
             "🔑 PlantNet API Key", 
             type="password",
             help="Get your free API key from https://my.plantnet.org/",
-            placeholder= "2b10jv62kgvLEuWwJaBWZzsM"
+            placeholder= "Enter your API key here..."
         )
         
         # Project selection
