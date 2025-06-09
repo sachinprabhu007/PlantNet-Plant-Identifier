@@ -7,6 +7,7 @@ import io
 import base64
 import os
 
+
 # Page configuration
 st.set_page_config(
     page_title="🌱 PlantNet Plant Identifier",
@@ -184,6 +185,9 @@ def display_results(results):
                 st.progress(confidence)
 
 def main():
+    # 🔑 Get API Key from environment variables
+    api_key = os.getenv("PLANTNET_API_KEY")
+    
     # Header
     st.markdown('<h1 class="main-header">🌱 PlantNet Plant Identifier</h1>', unsafe_allow_html=True)
     st.markdown("**Identify plants from photos using AI-powered PlantNet API**")
