@@ -282,10 +282,11 @@ def main():
                 st.error(f"Error loading image: {str(e)}")
                 image = None
     
-    with col2:
+with col2:
         # Instructions and examples
         st.markdown("### 📖 How to Use")
         st.markdown("""
+        
         1. **Configure** ⚙️  
            Choose region and plant part
         
