@@ -1,4 +1,4 @@
-# app.py - Main Streamlit application
+# app.py - Fixed Streamlit application for Render deployment
 import streamlit as st
 import requests
 import json
@@ -48,15 +48,45 @@ st.markdown("""
 # PlantNet API configuration
 PLANTNET_API_URL = "https://my-api.plantnet.org/v2/identify"
 
+def test_api_key(api_key):
+    """Test if the API key is valid"""
+    try:
+        # Create a small test request
+        test_url = f"{PLANTNET_API_URL}/all"
+        params = {'api-key': api_key}
+        
+        # Use a simple GET request to test the key
+        response = requests.get(test_url, params=params, timeout=10)
+        
+        # If we get 401, the key is invalid
+        if response.status_code == 401:
+            return False, "Invalid API key"
+        elif response.status_code == 400:
+            return True, "API key is valid"  # 400 is expected without image
+        else:
+            return True, "API key appears valid"
+            
+    except Exception as e:
+        return False, f"Connection error: {str(e)}"
+
 def identify_plant(image, api_key, project="all", organ="leaf"):
     """
     Send image to PlantNet API v2 for plant identification
     """
     try:
+        # Validate inputs
+        if not api_key or not api_key.strip():
+            return {"error": "API key is required"}
+        
         # Convert image to bytes
         img_buffer = io.BytesIO()
         if image.mode != 'RGB':
             image = image.convert('RGB')
+        
+        # Ensure image isn't too large
+        if max(image.size) > 1024:
+            image.thumbnail((1024, 1024), Image.Resampling.LANCZOS)
+        
         image.save(img_buffer, format='JPEG', quality=85)
         img_buffer.seek(0)
         
@@ -73,19 +103,44 @@ def identify_plant(image, api_key, project="all", organ="leaf"):
         # API endpoint with project
         url = f"{PLANTNET_API_URL}/{project}"
         
-        # Parameters
+        # Parameters - ensure API key is properly formatted
         params = {
-            'api-key': api_key
+            'api-key': api_key.strip()
         }
         
-        # Make the API request
-        response = requests.post(url, files=files, data=data, params=params)
+        # Add headers for better compatibility
+        headers = {
+            'User-Agent': 'PlantNet-Streamlit-App'
+        }
+        
+        # Make the API request with timeout
+        response = requests.post(
+            url, 
+            files=files, 
+            data=data, 
+            params=params, 
+            headers=headers,
+            timeout=30
+        )
+        
+        # Debug information
+        st.sidebar.info(f"API Response Status: {response.status_code}")
         
         if response.status_code == 200:
             return response.json()
+        elif response.status_code == 401:
+            return {"error": "Invalid API key. Please check your PlantNet API key."}
+        elif response.status_code == 400:
+            return {"error": f"Bad request: {response.text}"}
+        elif response.status_code == 413:
+            return {"error": "Image too large. Please use a smaller image."}
         else:
-            return {"error": f"API request failed with status code: {response.status_code}"}
+            return {"error": f"API request failed with status code: {response.status_code}. Response: {response.text}"}
             
+    except requests.exceptions.Timeout:
+        return {"error": "Request timed out. Please try again."}
+    except requests.exceptions.ConnectionError:
+        return {"error": "Connection error. Please check your internet connection."}
     except Exception as e:
         return {"error": f"An error occurred: {str(e)}"}
 
@@ -156,13 +211,26 @@ def main():
     with st.sidebar:
         st.header("⚙️ Configuration")
         
-        # API Key input
+        # API Key input with better validation
         api_key = st.text_input(
             "🔑 PlantNet API Key", 
             type="password",
             help="Get your free API key from https://my.plantnet.org/",
-            placeholder= "Enter your API key here..."
+            placeholder="Enter your API key here...",
+            key="api_key_input"
         )
+        
+        # Test API key button
+        if api_key:
+            if st.button("🧪 Test API Key"):
+                with st.spinner("Testing API key..."):
+                    is_valid, message = test_api_key(api_key)
+                    if is_valid:
+                        st.success(f"✅ {message}")
+                    else:
+                        st.error(f"❌ {message}")
+        
+        st.markdown("---")
         
         # Project selection
         project_options = {
@@ -198,6 +266,14 @@ def main():
         
         st.markdown("---")
         
+        # Debug section for troubleshooting
+        with st.expander("🔧 Debug Info"):
+            if api_key:
+                st.code(f"API Key Length: {len(api_key)}")
+                st.code(f"API Key Preview: {api_key[:8]}...")
+            st.code(f"Selected Project: {project}")
+            st.code(f"Selected Organ: {organ_type}")
+        
         # Tips section
         with st.expander("💡 Tips for Better Results"):
             st.markdown("""
@@ -206,6 +282,22 @@ def main():
             - **Avoid blurry or dark images** ❌
             - **Try different angles** 🔄
             - **Include multiple plant parts** 📋
+            """)
+        
+        # Troubleshooting section
+        with st.expander("🆘 Troubleshooting 401 Errors"):
+            st.markdown("""
+            **Common causes of 401 errors:**
+            
+            1. **Invalid API Key** - Make sure you copied it correctly
+            2. **Expired API Key** - Check if your key is still active
+            3. **Whitespace** - Remove any extra spaces
+            4. **Wrong API Version** - Ensure you're using v2 API key
+            
+            **Solutions:**
+            - Get a fresh API key from [my.plantnet.org](https://my.plantnet.org/)
+            - Test your key using the button above
+            - Copy-paste carefully without extra characters
             """)
         
         # About section
@@ -231,18 +323,22 @@ def main():
         
         if uploaded_file is not None:
             # Display the uploaded image
-            image = Image.open(uploaded_file)
-            st.image(image, caption="📷 Uploaded Image", use_column_width=True)
-            
-            # Image details
-            with st.expander("📋 Image Details"):
-                col_a, col_b, col_c = st.columns(3)
-                with col_a:
-                    st.metric("Width", f"{image.size[0]}px")
-                with col_b:
-                    st.metric("Height", f"{image.size[1]}px")
-                with col_c:
-                    st.metric("Format", image.format)
+            try:
+                image = Image.open(uploaded_file)
+                st.image(image, caption="📷 Uploaded Image", use_column_width=True)
+                
+                # Image details
+                with st.expander("📋 Image Details"):
+                    col_a, col_b, col_c = st.columns(3)
+                    with col_a:
+                        st.metric("Width", f"{image.size[0]}px")
+                    with col_b:
+                        st.metric("Height", f"{image.size[1]}px")
+                    with col_c:
+                        st.metric("Format", image.format or "Unknown")
+            except Exception as e:
+                st.error(f"Error loading image: {str(e)}")
+                image = None
     
     with col2:
         # Instructions and examples
@@ -254,29 +350,27 @@ def main():
         2. **Enter Key** ✍️  
            Paste it in the sidebar
         
-        3. **Configure** ⚙️  
+        3. **Test Key** 🧪  
+           Click "Test API Key" button
+        
+        4. **Configure** ⚙️  
            Choose region and plant part
         
-        4. **Upload Photo** 📸  
+        5. **Upload Photo** 📸  
            Select a clear plant image
         
-        5. **Identify** 🔍  
+        6. **Identify** 🔍  
            Click the button below!
         """)
     
     # Identify button (full width)
-    if uploaded_file is not None:
+    if uploaded_file is not None and 'image' in locals() and image is not None:
         if st.button("🔍 **Identify Plant**", type="primary", use_container_width=True):
-            if not api_key:
+            if not api_key or not api_key.strip():
                 st.error("🔑 Please enter your PlantNet API key in the sidebar.")
                 st.info("👉 Get your free API key from: https://my.plantnet.org/")
             else:
                 with st.spinner("🔍 Analyzing image... This may take a few seconds"):
-                    # Resize image if too large
-                    if max(image.size) > 1024:
-                        image.thumbnail((1024, 1024), Image.Resampling.LANCZOS)
-                        st.info(f"📏 Image resized for optimal processing")
-                    
                     # Identify the plant
                     results = identify_plant(image, api_key, project, organ_type)
                     
