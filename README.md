@@ -145,8 +145,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📧 Contact
 
-Project Link: [https://github.com/sachinprabhu007/Plant_Detection](https://github.com/sachinprabhu007/PlantNet-Plant-Identifier)
-
+Project Link: https://github.com/sachinprabhu007/PlantNet-Plant-Identifier
 ---
 
 Made with ❤️ for plant enthusiasts 🌱
