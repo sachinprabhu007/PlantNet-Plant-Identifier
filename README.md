@@ -77,11 +77,10 @@ The app supports multiple configuration options:
 
 ## 📱 Usage
 
-1. **Enter your PlantNet API key** in the sidebar
-2. **Select the appropriate flora database** for your region
-3. **Choose the plant part** shown in your image
-4. **Upload a clear photo** of the plant
-5. **Click "Identify Plant"** to get results
+1. **Select the appropriate flora database** for your region
+2. **Choose the plant part** shown in your image
+3. **Upload a clear photo** of the plant
+4. **Click "Identify Plant"** to get results
 
 ## 💡 Tips for Best Results
 
