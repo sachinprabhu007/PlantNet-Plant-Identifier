@@ -48,26 +48,7 @@ st.markdown("""
 # PlantNet API configuration
 PLANTNET_API_URL = "https://my-api.plantnet.org/v2/identify"
 
-def test_api_key(api_key):
-    """Test if the API key is valid"""
-    try:
-        # Create a small test request
-        test_url = f"{PLANTNET_API_URL}/all"
-        params = {'api-key': api_key}
-        
-        # Use a simple GET request to test the key
-        response = requests.get(test_url, params=params, timeout=10)
-        
-        # If we get 401, the key is invalid
-        if response.status_code == 401:
-            return False, "Invalid API key"
-        elif response.status_code == 400:
-            return True, "API key is valid"  # 400 is expected without image
-        else:
-            return True, "API key appears valid"
-            
-    except Exception as e:
-        return False, f"Connection error: {str(e)}"
+
 
 def identify_plant(image, api_key, project="all", organ="leaf"):
     """
@@ -208,16 +189,6 @@ def main():
     st.markdown("**Identify plants from photos using AI-powered PlantNet API**")
     
     with st.sidebar:
-    st.header("⚙️ Configuration")
-
-    # Load API key from environment variable
-    api_key = os.getenv("PLANTNET_API_KEY", "").strip()
-    
-    if not api_key:
-        st.error("⚠️ API key not found in environment variables!")
-        st.markdown("Please set the `PLANTNET_API_KEY` environment variable in Render dashboard.")
-    
-    # No test API key input or debug info shown
     
     st.markdown("---")
     
@@ -314,7 +285,6 @@ def main():
     with col2:
         # Instructions and examples
         st.markdown("### 📖 How to Use")
-        st.markdown("""
         
         1. **Configure** ⚙️  
            Choose region and plant part
