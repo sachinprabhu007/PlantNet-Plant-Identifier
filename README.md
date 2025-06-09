@@ -15,7 +15,7 @@ A beautiful Streamlit web application that identifies plants from photos using t
 
 ## 🚀 Live Demo
 
-Visit the live application: [Your Render URL will go here]
+Visit the live application: https://plantnet-plant-identifier.onrender.com/
 
 ## 📸 Screenshots
 
