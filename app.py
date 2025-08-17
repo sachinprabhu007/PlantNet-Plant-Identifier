@@ -318,6 +318,7 @@ def main():
     <div style='text-align: center; color: #666; padding: 2rem;'>
         <p>🌱 <strong>PlantNet Plant Identifier</strong> | Powered by PlantNet API & Streamlit</p>
         <p>Made with ❤️ for plant enthusiasts</p>
+        <p> by Sachin Prabhu </p>
     </div>
     """, unsafe_allow_html=True)
 
