@@ -18,6 +18,7 @@ A beautiful Streamlit web application that identifies plants from photos using t
 Visit the live application: https://plantnet-plant-identifier-1.onrender.com/
 
 ## 📸 Screenshots
+<img width="800" height="1457" alt="image" src="https://github.com/user-attachments/assets/1d59883c-2674-42b4-9f2a-5cd044d05072" />
 
 
 ## 🛠️ Installation & Setup
@@ -52,10 +53,11 @@ Visit the live application: https://plantnet-plant-identifier-1.onrender.com/
 2. **Create a new Web Service** on [Render](https://render.com/)
    - Connect your GitHub repository
    - Use the following settings:
+   -  **configure env variables :** please refer - https://render.com/docs/configure-environment-variables
      - **Build Command:** `pip install -r requirements.txt`
      - **Start Command:** `streamlit run app.py --server.port $PORT --server.address 0.0.0.0`
 
-3. **Deploy** and your app will be live!
+4. **Deploy** and your app will be live!
 
 ## 🔧 Configuration
 
@@ -106,7 +108,6 @@ This app requires a free PlantNet API key:
 2. Create an account
 3. Go to your account settings
 4. Generate your private API key
-5. Enter it in the app's sidebar
 
 ## 🏗️ Architecture
 
@@ -118,16 +119,6 @@ plantnet-plant-identifier
 ├── .gitignore         # Git ignore file
 └── assets/            # Static assets (optional)
 ```
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ## 📄 License
 
