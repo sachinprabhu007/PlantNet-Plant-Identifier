@@ -316,7 +316,11 @@ def main():
     st.markdown("---")
     st.markdown("""
     <div style='text-align: center; color: #666; padding: 2rem;'>
-        <p>🌱 <strong>PlantNet Plant Identifier</strong> | Powered by PlantNet API & Streamlit</p>
+        <p>🌱 <strong>PlantNet Plant Identifier</strong> | Powered by 
+            <a href='https://plantnet.org/' target='_blank'>PlantNet API</a>, 
+            <a href='https://render.com/' target='_blank'>Render</a> & 
+            <a href='https://streamlit.io/' target='_blank'>Streamlit</a>
+        </p>
         <p>Made with ❤️ for plant enthusiasts</p>
         <p> by Sachin Prabhu </p>
         <p>🔗 <a href='https://github.com/sachinprabhu007/PlantNet-Plant-Identifier' target='_blank'>View on GitHub</a></p>
