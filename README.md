@@ -112,12 +112,14 @@ This app requires a free PlantNet API key:
 ## 🏗️ Architecture
 
 ```
-plantnet-plant-identifier
-├── app.py              # Main Streamlit application
-├── requirements.txt    # Python dependencies
-├── README.md          # This file
-├── .gitignore         # Git ignore file
-└── assets/            # Static assets (optional)
+PlantNet-Plant-Identifier/
+├── .streamlit/
+│   └── config.toml
+├── .gitignore
+├── LICENSE
+├── README.md
+├── app.py
+└── requirements.txt
 ```
 
 ## 📄 License
