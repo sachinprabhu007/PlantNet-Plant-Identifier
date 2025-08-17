@@ -55,7 +55,7 @@ Visit the live application: https://plantnet-plant-identifier-1.onrender.com/
    - Use the following settings:
    -  **configure env variables :** please refer - https://render.com/docs/configure-environment-variables
      - **Build Command:** `pip install -r requirements.txt`
-     - **Start Command:** `streamlit run app.py --server.port $PORT --server.address 0.0.0.0`
+     - **Start Command:** `streamlit run app.py --server.port=$PORT --server.address=0.0.0.0 --server.headless=true --server.enableCORS=false`
 
 4. **Deploy** and your app will be live!
 
