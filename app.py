@@ -319,6 +319,7 @@ def main():
         <p>🌱 <strong>PlantNet Plant Identifier</strong> | Powered by PlantNet API & Streamlit</p>
         <p>Made with ❤️ for plant enthusiasts</p>
         <p> by Sachin Prabhu </p>
+        <p>🔗 <a href='https://github.com/sachinprabhu007/PlantNet-Plant-Identifier' target='_blank'>View on GitHub</a></p>
     </div>
     """, unsafe_allow_html=True)
 
