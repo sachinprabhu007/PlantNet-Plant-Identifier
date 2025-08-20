@@ -27,8 +27,8 @@ Visit the live application: https://plantnet-plant-identifier-1.onrender.com/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/plantnet-identifier.git
-   cd plantnet-identifier
+   git clone https://github.com/sachinprabhu007/PlantNet-Plant-Identifier.git
+   cd PlantNet-Plant-Identifier
    ```
 
 2. **Install dependencies**
@@ -111,6 +111,9 @@ This app requires a free PlantNet API key:
 
 ## 🏗️ Architecture
 
+<img width="1188" height="1088" alt="sequence diagram - plantnet" src="https://github.com/user-attachments/assets/7f9e5120-6b1d-4358-8321-01225b6516ba" />
+<img width="800" height="2000" alt="🌱 PlantNet Plant Identifier Workflow 🌱" src="https://github.com/user-attachments/assets/a6ab8cba-811e-4189-94b4-11216a87f63e" />
+
 ```
 PlantNet-Plant-Identifier/
 ├── .streamlit/
@@ -128,9 +131,10 @@ Please go through [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
-- [PlantNet](https://plantnet.org/) for providing the amazing plant identification API
-- [Streamlit](https://streamlit.io/) for the fantastic web app framework
-- The plant photography community for inspiration
+- [PlantNet](https://plantnet.org/) for providing the amazing plant identification API  
+- [Streamlit](https://streamlit.io/) for the fantastic web app framework  
+- [Render](https://render.com/) which acts as the backend and enables seamless deployment  
+- The plant photography community for inspiration  
 
 ## 📧 Contact
 
@@ -138,4 +142,4 @@ Project Link: https://github.com/sachinprabhu007/PlantNet-Plant-Identifier
 
 ---
 
-Made with ❤️ for plant enthusiasts 🌱
+Made with ❤️ for plant enthusiasts 🌱 by Sachin Prabhu 
